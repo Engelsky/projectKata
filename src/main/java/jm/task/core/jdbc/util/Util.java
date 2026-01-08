@@ -14,7 +14,7 @@ public class Util {
     private static final String DB_DRIVER = "com.mysql.cj.jdbc.Driver";
     private static final String DB_URL = "jdbc:mysql://localhost:3306/katapp1134";
     private static final String DB_USER = "root";
-    private static final String DB_PASSWORD = "мой пароль";
+    private static final String DB_PASSWORD = "Bzkvn809";
 
     public static Connection getConnection() {
         Connection conn = null;
