@@ -79,7 +79,7 @@ public class UserDaoJDBCImpl implements UserDao {
         try (Connection connection = Util.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql);
              ResultSet resultSet = preparedStatement.executeQuery(sql)) {
-            // Проходимся циклом по resultSet
+            // Проходимся циклом while по resultSet
             // и Превращаем строки таблицы в объекты User
             while (resultSet.next()) { // Пока есть строки в ответе БД
                 User user = new User();
