@@ -13,7 +13,7 @@ public class UserDaoJDBCImpl implements UserDao {
     }
     // Создание таблицы
     public void createUsersTable() {
-        String sql = "CREATE TABLE IF NOT users (" +
+        String sql = "CREATE TABLE IF NOT EXISTS users (" +
                 "id BIGINT PRIMARY KEY AUTO_INCREMENT, " +
                 "name VARCHAR(45), " +
                 "lastName VARCHAR(45), " +
