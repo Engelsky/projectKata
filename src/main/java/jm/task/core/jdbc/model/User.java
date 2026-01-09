@@ -57,19 +57,14 @@ public class User {
 
         User user = (User) o;
 
-        if (id != null ? !id.equals(user.id) : user.id != null) return false;
-        if (name != null ? !name.equals(user.name) : user.name != null) return false;
-        if (lastName != null ? !lastName.equals(user.lastName) : user.lastName != null) return false;
-        return age != null ? age.equals(user.age) : user.age == null;
+        return java.util.Objects.equals(id, user.id) &&
+                java.util.Objects.equals(name, user.name) &&
+                java.util.Objects.equals(lastName, user.lastName) &&
+                java.util.Objects.equals(age, user.age);
     }
-
     @Override
     public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
-        result = 31 * result + (age != null ? age.hashCode() : 0);
-        return result;
+        return java.util.Objects.hash(id, name, lastName, age);
     }
 
     @Override
