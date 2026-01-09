@@ -5,9 +5,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+// реализация настройки соединения с БД
 public class Util {
-    // реализуйте настройку соеденения с БД
-
     // настройки подключения к БД
     // com.mysql.jdbc.Driver был предложен средой, но это же устаревшее
     // а у меня версия MySQL 8-ая, посему cj

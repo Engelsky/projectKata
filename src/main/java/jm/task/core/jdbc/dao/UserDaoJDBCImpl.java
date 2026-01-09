@@ -12,6 +12,7 @@ public class UserDaoJDBCImpl implements UserDao {
 
     }
     // Создание таблицы
+    @Override
     public void createUsersTable() {
         String sql = "CREATE TABLE IF NOT EXISTS users (" +
                 "id BIGINT PRIMARY KEY AUTO_INCREMENT, " +
@@ -19,7 +20,7 @@ public class UserDaoJDBCImpl implements UserDao {
                 "lastName VARCHAR(45), " +
                 "age TINYINT)";
 
-        // t-w-r автоматически закроет Connection и Statement после выполнения
+        // try-with-resources
         try (Connection connection = Util.getConnection();
              Statement statement = connection.createStatement()) {
             statement.executeUpdate(sql); // Выполняем SQL
@@ -29,6 +30,7 @@ public class UserDaoJDBCImpl implements UserDao {
         }
     }
     // Удаление таблицы
+    @Override
     public void dropUsersTable() {
         String sql = "DROP TABLE IF EXISTS users";
 
@@ -42,6 +44,7 @@ public class UserDaoJDBCImpl implements UserDao {
         }
     }
     // Сохранение пользователя
+    @Override
     public void saveUser(String name, String lastName, byte age) {
         String sql = "INSERT INTO users (name, lastName, age) VALUES (?, ?, ?)";
 
@@ -60,6 +63,7 @@ public class UserDaoJDBCImpl implements UserDao {
         }
     }
     // Удаление по ID
+    @Override
     public void removeUserById(long id) {
         String sql = "DELETE FROM users WHERE id = ?";
 
@@ -72,6 +76,7 @@ public class UserDaoJDBCImpl implements UserDao {
         }
     }
     // Получение всех пользователей
+    @Override
     public List<User> getAllUsers() {
         String sql = "SELECT * FROM users";
         List<User> users = new ArrayList<>();
@@ -79,7 +84,7 @@ public class UserDaoJDBCImpl implements UserDao {
         try (Connection connection = Util.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql);
              ResultSet resultSet = preparedStatement.executeQuery(sql)) {
-            // Проходимся циклом while по resultSet
+            // Проходимся циклом по resultSet
             // и Превращаем строки таблицы в объекты User
             while (resultSet.next()) { // Пока есть строки в ответе БД
                 User user = new User();
@@ -97,6 +102,7 @@ public class UserDaoJDBCImpl implements UserDao {
         return users;
     }
     // Очистка таблицы(удаляем все записи, сохраняя структуру)
+    @Override
     public void cleanUsersTable() {
         String sql = "DELETE FROM users";
 
