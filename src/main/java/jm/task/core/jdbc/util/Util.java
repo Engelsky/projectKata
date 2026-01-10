@@ -1,9 +1,17 @@
 package jm.task.core.jdbc.util;
 
 
+import jm.task.core.jdbc.model.User;
+import org.hibernate.SessionFactory;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.cfg.Environment;
+import org.hibernate.service.ServiceRegistry;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Properties;
 
 // реализация настройки соединения с БД
 public class Util {
@@ -29,5 +37,46 @@ public class Util {
             System.out.println("Connection Failed! Check output console");
         }
         return conn;
+    }
+    //HIBERNATE конфиг
+    private static SessionFactory sessionFactory;
+    public static SessionFactory getSessionFactory() {
+        if (sessionFactory == null) {
+            try {
+                Configuration configuration = new Configuration();
+                // Настройки Hibernate
+                // Весь пут решил вынести в отдельный метод getHibernateSettings()
+                Properties settings = getHibernateSettings();
+
+                configuration.setProperties(settings);
+
+                configuration.setProperties(settings);
+                // Добавляем наш класс-сущность
+                configuration.addAnnotatedClass(User.class);
+
+                ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
+                        .applySettings(settings).build();
+
+                sessionFactory = configuration.buildSessionFactory(serviceRegistry);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return sessionFactory;
+    }
+
+    private static Properties getHibernateSettings() {
+        Properties settings = new Properties();
+        settings.put(Environment.DRIVER, DB_DRIVER);
+        settings.put(Environment.URL, DB_URL);
+        settings.put(Environment.USER, DB_USER);
+        settings.put(Environment.PASS, DB_PASSWORD);
+        // указываем диалект для Hibernate, чтоб он понимал, что работаем с MySQL 8
+        settings.put(Environment.DIALECT, "org.hibernate.dialect.MySQL8Dialect");
+        settings.put(Environment.SHOW_SQL, "true"); // Показываем SQL в консоли
+        settings.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, "thread");
+        settings.put(Environment.HBM2DDL_AUTO, ""); // IDEA предлагает update,
+        // но по заданию мы создаем таблицу ручками
+        return settings;
     }
 }

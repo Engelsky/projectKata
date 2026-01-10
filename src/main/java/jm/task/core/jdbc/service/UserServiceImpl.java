@@ -1,15 +1,16 @@
 package jm.task.core.jdbc.service;
 
 import jm.task.core.jdbc.dao.UserDao;
+import jm.task.core.jdbc.dao.UserDaoHibernateImpl;
 import jm.task.core.jdbc.dao.UserDaoJDBCImpl;
 import jm.task.core.jdbc.model.User;
 
 import java.util.List;
 
 public class UserServiceImpl implements UserService {
-    // Создаём экземпляр нашего DAO, чтобы через него работать с базой
-    private UserDao userDao = new UserDaoJDBCImpl();
-    // Делегируем работу методам из UserDaoJDBCImpl
+    // Создаём экземпляр нашего DAO(теперь Hibernate), чтобы через него работать с базой
+    private UserDao userDao = new UserDaoHibernateImpl();
+    // Делегируем работу методам из UserDaoHibernateImpl
     @Override
     public void createUsersTable() {
         userDao.createUsersTable();
